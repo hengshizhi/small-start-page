@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>小小起始页</title>
+    <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.3/jquery.js"></script>
+    <script>
+$(function(){
+    $.ajax({
+        type: "POST",
+        url: "/read",
+        data: {
+        // path:pathData[key][0],
+        // api_id:api_id,
+        // api_key:api_key
+    },
+        success: function (data,status,xhr) {
+            //当请求成功时运行的函数。
+            $('#input').attr("value",data);
+        },
+        error:function(xhr,status,error){
+            //如果请求失败要运行的函数。
+            alert('获取内容失败'+error)
+        }});
+    $("input").blur(function(){
+        let data = {};
+        let value = $('#form').serializeArray();
+        $.each(value, function (index, item) {
+        data[item.name] = item.value;
+        });
+        data = data['firstname'];
+        console.log(data);
+        $.ajax({
+            type: "POST",
+            url: "/write",
+            data: {
+                data: data
+        },
+            success: function (data,status,xhr) {
+                //当请求成功时运行的函数。
+                // $('#input').attr("value",data);
+            },
+            error:function(xhr,status,error){
+                //如果请求失败要运行的函数。
+                alert('更新内容失败'+error)
+            }});
+    });
+})
+
+    </script>
+    <style>
+        body {
+            background-image: url('https://service-djbqi6pz-1306777571.sh.apigw.tencentcs.com/release/?id=21&form=webp&');
+        }
+        .example{
+            background-image: linear-gradient(to right top, rgba(255,255,255,0.3), rgba(255,255,255,0.7));
+            position: relative;
+            width: 60%;
+            height: 600px;
+            box-shadow: 0 5px 15px rgba(20, 20, 20, 0.8);
+            display: flex;
+            border-radius: 50px;
+            align-items: center;
+            top: 100px;
+            margin:0 auto;
+        }
+        .container {
+            margin:0 auto;
+            width: 60%;
+            height: 60%;
+        }
+        input[type=text] {
+            width: 60%;
+            height: 30px;
+            box-shadow: 0 5px 15px rgba(20, 20, 20, 0.8);
+            background-color: rgba(255,255,255,0.7);
+            font-weight: bold;
+            padding: 0 5px;
+            outline-width: 5px;
+            box-shadow: 0px 0px 12px -1px #b1c1c3;
+            font-size: 14px;
+            color: rgba(60, 60, 60, 0.774);
+        }
+    </style>
+</head>
+<body>
+    <div class="example">
+        <div class="container">
+            <h1>这是一个很好的起始页，对的很好的</h1>
+            <h2>写下你今日要做的事吧</h2>
+            <form action="" id="form">
+                <b>My thing is: </b><input type="text" name="firstname" id="input" value=""><br>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
